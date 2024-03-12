@@ -6,6 +6,7 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,6 +18,8 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
+    - name: Clean install byte-buddy skipping tests
+      run: mvn clean install -DskipTests -pl byte-buddy -am
     - name: Run testNonGenericParameter with Maven
       run: mvn -pl byte-buddy-dep test -Dtest=net.bytebuddy.implementation.auxiliary.MethodCallProxyTest#testNonGenericParameter
     - name: Run NonDex for testNonGenericParameter with Maven
